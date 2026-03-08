@@ -1,0 +1,147 @@
+spring:
+  application:
+    name: java-crypto-library
+
+# ==============================================================================
+# Common Crypto Module — Example Configuration  (Java 21 edition)
+# ==============================================================================
+# PCI-DSS: NEVER commit real key material to version control.
+# Supply values via:
+#   • Environment variables            (recommended for containers)
+#   • HashiCorp Vault / AWS Secrets Manager
+#   • Spring Cloud Config + encryption
+# ==============================================================================
+
+#crypto:
+#  # Base64-encoded 256-bit (32-byte) AES key.
+#  # Generate:  openssl rand -base64 32
+#  aes-key: ${CRYPTO_AES_KEY}
+#
+#  pgp:
+#    # ASCII-armored PGP public key  (encrypt / verify)
+#    public-key: ${CRYPTO_PGP_PUBLIC_KEY}
+#
+#    # ASCII-armored PGP private key (decrypt / sign)
+#    private-key: ${CRYPTO_PGP_PRIVATE_KEY}
+#
+#    # Passphrase protecting the private key
+#    private-key-passphrase: ${CRYPTO_PGP_PASSPHRASE}
+
+
+crypto:
+  aes-key: dvjKbD/FWcZ775VbcD0STWCdfMO9rE9jyPvkr+ySGAY=
+  pgp:
+    public-key: |
+      -----BEGIN PGP PUBLIC KEY BLOCK-----
+      
+      mQENBGmpLicBCADJASCQFbCj+6LIehf1dcHRlCw9Cf3ybuNCO2phG0o0i+ivkn9L
+      NFKbg1qSIUif/6V3kZIr8HMXRMg/jPITJupYpFiQGPESVEDYJKowWOfnULkCWPBb
+      6wlj78KNC6NNVjfi3J7DWbC1GC2QMj86BI3LPDMX03huCY810D7cRiPNk+UZaIOn
+      Dam+5HQkh4+WnEUyM3TNhcT3YvrRsMopz1qIgLfxzuj+TsZtog0bEGaaQ4tUdB8r
+      VyAT1nW7WtrneHAtXnKHL0p1jUCSX2QE1RcBFgvQhgFv/R+6JCwoM6F7qs4AkSN1
+      /xS5w2+r9fqfF9GEnnf1J1PU0lRn0Y7v5JPlABEBAAG0HXBvYy1zZXJ2aWNlIDxw
+      b2NAZXhhbXBsZS5jb20+iQFUBBMBCgA+FiEE5/J5uNRqBXoVdmPLld1De7RMjoEF
+      AmmpLicCGw8FCQHhM4AFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQld1De7RM
+      joHfNggAr0eIThRnOVpgyJQpeA3wEK9ADRW4FgXk5KiW0L8lPvW8bfgxCxOZXorY
+      xPhScAY7IDCZA8fkzrKYM0ASIy6b6BguqRLZs9iRN/KKKQMh+w3BSINf9TUr7YN/
+      SakgvuApRGGvQsHlVax8Eclz0ZUTjtPQp5GvF12D/R+IGUp/XuI8ckDIWfCci3wZ
+      jKecVqpq8LULEoFfvNhVotuJ6yvVZoGq6UmpeMhzPaQpcCNUJmxluFO8dQYVfTXD
+      afpfzUR3NlH+7GSFUsVSvVtKQCd/4oAL3o0868oDGgmV1uZNFYznCkxe6NrWzBE7
+      7R7CXn/cDZm0yZtcFJ6lyAglbyJJ2bkBDQRpqS4nAQgA3MyFGsQaRO0GLvB4iqHE
+      viJHwTWpic0TLMW7ZqFl7n2VZBCQ3S3m8zCe7a3MXgIejmZSzPzH0aZmtaJwn5BE
+      YBd+UQclnDPShCKSbKYZVF2bocAzK8YixAbDc913a6kJY21O2s5CIFrjqkixu87a
+      V5fZzNbdMDyDRqPiwwQevc3c2ENxu49upoJvp4/ghJ5xn5Sei/RsXTruVHDrTo5n
+      5nWfl92c3zOpPChsygGoD8s33m+X/OoDKBE0KkoFGp6EWAIrbUiRStHjWPKKxxl5
+      yByqWlhkk8qR6HlKHAoDiMZPtiP4viUAIKA+Ft+n4Ghv7kmw2qRc2CQ49IQcEJZz
+      SwARAQABiQE8BBgBCgAmFiEE5/J5uNRqBXoVdmPLld1De7RMjoEFAmmpLicCGwwF
+      CQHhM4AACgkQld1De7RMjoE+eAf/bIQNTilGfRWMwhi/yhg9g0CWTI6GvQIzzc8O
+      UzcNiwpIXbU9VTclLC0G3ig9RbwK7ZHNO+vp4xA0s8iwlagxys3QT3oya5vwFcet
+      qjJl0IlR9fsJKabx7dukLok36bnnQ/PWW+Z/aa0rdEHiuohk89Npp92+X/ziuZ7A
+      btwK2Wg4ggQSv1IO4bX4y/jzCsvv8NVE2ypiUX6jwM6R0NwlAf7/f6fq3nU48NGg
+      6xfGzuWl7aYtlFZlITemh4WiCV7vUZlD7BNMFuhMR8Kad5S6lOEM9cAqkEQl0yGY
+      bFIfXXYdd4O1AAruYaWBSNf1OJCFBQYXBcaO5NtbAnLFISCFKg==
+      =gJKU
+      -----END PGP PUBLIC KEY BLOCK-----
+    private-key: |
+      -----BEGIN PGP PRIVATE KEY BLOCK-----
+      
+      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
+      =oCpy
+      -----END PGP PRIVATE KEY BLOCK-----
+    private-key-passphrase: ""
+
+# PKI — only needed if you call PkiUtils.loadCertificate() directly
+# pki:
+#   certificate: |
+#     -----BEGIN CERTIFICATE-----
+#     MIIDQzCCAiugAwIBAgIUaLj6rlHU5Z9SLe82Sj0lbAT+frswDQYJKoZIhvcNAQEL
+#     BQAwMTEUMBIGA1UEAwwLcG9jLXNlcnZpY2UxDDAKBgNVBAoMA1BPQzELMAkGA1UE
+#     BhMCVVMwHhcNMjYwMzA1MDcxODAwWhcNMjcwMzA1MDcxODAwWjAxMRQwEgYDVQQD
+#     DAtwb2Mtc2VydmljZTEMMAoGA1UECgwDUE9DMQswCQYDVQQGEwJVUzCCASIwDQYJ
+#     KoZIhvcNAQEBBQADggEPADCCAQoCggEBAM2naVv+Tqo7u3Y1n3Bq3/98z3Gg9tUH
+#     HsNiNVUdPR0FAw++NdJ26qtzj6A71z96f0G9BgiiaSbOOtDlulEqpWxDe9iPMjhN
+#     Q3i3Y+0lK/RB4aY7lZ/Z43Yg/n8VLvKkbUoa4RdRiwu8pMIurbSKhuULdt/ifoGR
+#     CxrJelLA2VLiveKFJAvr02ehhFEF+W9r6OmejHkfs6Rf1AHBy1Y6kIkUzDegJVeu
+#     jtCCxF4FnjwpgrhM3JbvGBi+ZbghMNLbM3laKyrmlbNsRHjd7c7dFPuCFhfIIaLm
+#     sdByVZaqyf3etsMKqsnfuXPUZF0EVYrP+cRFuB3SYSPAcP3iIxmaghMCAwEAAaNT
+#     MFEwHQYDVR0OBBYEFAwZrGv4dXGguIU+ODoKwJalUQBoMB8GA1UdIwQYMBaAFAwZ
+#     rGv4dXGguIU+ODoKwJalUQBoMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQEL
+#     BQADggEBAIkJGC5N4JbE2mreDhT9Z34KpdtrHIaRqSdSkJzdoBuhSqKGuLVvHHPc
+#     zeMafrDO2I2EKkCBT+Kmt3759Ns9SkAFkmJSxPKD82SzNatPinzdnjrVAAYIxiIh
+#     ZXzeZMgqBlLtO3nu3mEQb9SEeVTWWd1HvfoLX+JziqQqOoaou1vThfK3QnW7tTMs
+#     8aRzYWRXZSTqX0pPcHo153vySetIAkYxqDgBZa2b4TO/La1ZDG/yGOliHdJQeLCS
+#     qv5L9t9npFnKXHyFgIdh13cW+Bvn1sOkEApq6p9C80iVGJBvk8sGw9ZgvF9MFsIS
+#     HSdSbFMum2GBaaQKyyGiFgyDK6synjs=
+#     -----END CERTIFICATE-----

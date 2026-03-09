@@ -3,6 +3,7 @@ package io.tntra.java_crypto_library.service;
 import io.tntra.java_crypto_library.exception.CryptoException;
 import io.tntra.java_crypto_library.properties.CryptoProperties;
 import org.bouncycastle.openpgp.PGPObjectFactory;
+import org.bouncycastle.openpgp.PGPPublicKey;
 import org.junit.jupiter.api.*;
 
 import java.nio.charset.StandardCharsets;
@@ -183,8 +184,9 @@ class PgpCryptoServiceTest {
         pgpCryptoService = new PgpCryptoService(props);
     }
 
+    /** Encrypts and decrypts bytes using provided public/private keys */
     @Test
-    void encryptDecryptShouldWorkTest() {
+    void encryptDecryptTest() {
         byte[] data = "HelloPGP".getBytes(StandardCharsets.UTF_8);
 
         String encrypted = pgpCryptoService.encrypt(data, PUBLIC_KEY);
@@ -196,8 +198,9 @@ class PgpCryptoServiceTest {
         assertEquals("HelloPGP", new String(decrypted, StandardCharsets.UTF_8));
     }
 
+    /** Signs data and verifies the signature with public key */
     @Test
-    void signVerifyShouldWorkTest() {
+    void signVerifyTest() {
         byte[] data = "signature-test".getBytes(StandardCharsets.UTF_8);
 
         String signature = pgpCryptoService.sign(data, PRIVATE_KEY);
@@ -209,8 +212,9 @@ class PgpCryptoServiceTest {
         assertEquals(true, isVerified);
     }
 
+    /** Throws when encrypting null data */
     @Test
-    void encryptShouldThrowWhenDataNullTest() {
+    void encryptNullDataTest() {
 
         CryptoException.PgpException ex =
                 assertThrows(CryptoException.PgpException.class,
@@ -219,8 +223,9 @@ class PgpCryptoServiceTest {
         assertEquals("Data must not be null", ex.getMessage());
     }
 
+    /** Throws when public key is blank for encryption */
     @Test
-    void encryptShouldThrowWhenPublicKeyBlankTest() {
+    void encryptBlankPublicKeyTest() {
 
         byte[] data = "abc".getBytes();
 
@@ -229,8 +234,9 @@ class PgpCryptoServiceTest {
         assertEquals("Public key must not be null or blank", ex.getMessage());
     }
 
+    /** Throws when public key is null for encryption */
     @Test
-    void encryptShouldThrowWhenPublicKeyNullTest() {
+    void encryptNullPublicKeyTest() {
 
         byte[] data = "abc".getBytes();
 
@@ -239,38 +245,41 @@ class PgpCryptoServiceTest {
         assertEquals("Public key must not be null or blank", ex.getMessage());
     }
 
+    /** Throws when decrypting with blank encrypted data */
     @Test
-    void decryptShouldThrowWhenEncryptedDataBlankTest() {
+    void decryptBlankEncryptedDataTest() {
 
         assertThrows(CryptoException.PgpException.class,
                 () -> pgpCryptoService.decrypt("", PRIVATE_KEY));
     }
 
-
+    /** Throws when decrypting with blank private key */
     @Test
-    void decryptShouldThrowWhenPrivateKeyBlankTest() {
+    void decryptBlankPrivateKeyTest() {
 
         assertThrows(CryptoException.PgpException.class,
                 () -> pgpCryptoService.decrypt("abc", ""));
     }
 
+    /** Throws when decrypting invalid Base64 encrypted text */
     @Test
-    void decryptShouldFailForInvalidBase64Test() {
+    void decryptInvalidBase64Test() {
 
         assertThrows(CryptoException.PgpException.class,
                 () -> pgpCryptoService.decrypt("invalid-base64%%% ", PRIVATE_KEY));
     }
 
+    /** Throws when signing null data */
     @Test
-    void signShouldThrowWhenDataNullTest() {
+    void signNullDataTest() {
 
         assertThrows(CryptoException.PgpException.class,
                 () -> pgpCryptoService.sign(null, PRIVATE_KEY));
     }
 
-
+    /** Throws when private key is blank for signing */
     @Test
-    void signShouldThrowWhenPrivateKeyBlankTest() {
+    void signBlankPrivateKeyTest() {
 
         byte[] data = "abc".getBytes();
 
@@ -278,15 +287,17 @@ class PgpCryptoServiceTest {
                 () -> pgpCryptoService.sign(data, ""));
     }
 
+    /** Throws when verifying null data */
     @Test
-    void verifyShouldThrowWhenDataNullTest() {
+    void verifyNullDataTest() {
 
         assertThrows(CryptoException.PgpException.class,
                 () -> pgpCryptoService.verify(null, "sig", PUBLIC_KEY));
     }
 
+    /** Throws when signature is blank during verification */
     @Test
-    void verifyShouldThrowWhenSignatureBlankTest() {
+    void verifyBlankSignatureTest() {
 
         byte[] data = "abc".getBytes();
 
@@ -294,8 +305,9 @@ class PgpCryptoServiceTest {
                 () -> pgpCryptoService.verify(data, "", PUBLIC_KEY));
     }
 
+    /** Throws when public key is blank during verification */
     @Test
-    void verifyShouldThrowWhenPublicKeyBlankTest() {
+    void verifyBlankPublicKeyTest() {
 
         byte[] data = "abc".getBytes();
 
@@ -303,8 +315,9 @@ class PgpCryptoServiceTest {
                 () -> pgpCryptoService.verify(data, "sig", ""));
     }
 
+    /** Throws when signature is invalid during verification */
     @Test
-    void verifyShouldFailForInvalidSignatureTest() {
+    void verifyInvalidSignatureTest() {
 
         byte[] data = "abc".getBytes();
 
@@ -312,8 +325,9 @@ class PgpCryptoServiceTest {
                 () -> pgpCryptoService.verify(data, "invalidSignature", PUBLIC_KEY));
     }
 
+    /** When encryption fails with invalid key, exception is thrown with cause */
     @Test
-    void whenEncryptionFailsTest() {
+    void encryptionFailureTest() {
 
         byte[] data = "test-data".getBytes();
 
@@ -332,8 +346,9 @@ class PgpCryptoServiceTest {
         assertNotNull(exception.getCause());
     }
 
+    /** When signing fails with invalid private key, exception is thrown with cause */
     @Test
-    void whenSigningFailsTest() {
+    void signingFailureTest() {
 
         byte[] data = "test-sign".getBytes();
 
@@ -352,9 +367,9 @@ class PgpCryptoServiceTest {
         assertNotNull(exception.getCause());
     }
 
-
+    /** extractLiteralData() should throw when factory returns unexpected object */
     @Test
-    void extractLiteralDataShouldThrowWhenUnexpectedObjectType() throws Exception {
+    void extractLiteralDataUnexpectedTypeTest() throws Exception {
 
         CryptoProperties props =
                 new CryptoProperties("dvjKbD/FWcZ775VbcD0STWCdfMO9rE9jyPvkr+ySGAY=",
@@ -362,7 +377,6 @@ class PgpCryptoServiceTest {
 
         PgpCryptoService service = new PgpCryptoService(props);
 
-        // Mock factory returning unexpected object
         PGPObjectFactory factory = org.mockito.Mockito.mock(PGPObjectFactory.class);
         org.mockito.Mockito.when(factory.nextObject()).thenReturn(new Object());
 
@@ -380,9 +394,9 @@ class PgpCryptoServiceTest {
         assertTrue(cause.getMessage().contains("Unexpected PGP object type"));
     }
 
-
+    /** resolveEncryptedDataList() should throw when no encrypted data found */
     @Test
-    void resolveEncryptedDataListShouldThrowWhenNoEncryptedDataFound() throws Exception {
+    void resolveEncryptedDataListNoEncryptedDataTest() throws Exception {
 
         CryptoProperties props =
                 new CryptoProperties(AES_KEY, CryptoProperties.Pgp.EMPTY);
@@ -391,7 +405,6 @@ class PgpCryptoServiceTest {
 
         PGPObjectFactory factory = org.mockito.Mockito.mock(PGPObjectFactory.class);
 
-        // first call returns object
         org.mockito.Mockito.when(factory.nextObject())
                 .thenReturn(new Object())
                 .thenReturn(new Object());
@@ -410,6 +423,56 @@ class PgpCryptoServiceTest {
         assertTrue(cause.getMessage().contains("No PGP encrypted data found"));
     }
 
+    /** readPublicKey() should return an encryption-capable public key */
+    @Test
+    void readPublicKeyReturnsEncryptionKeyTest() throws Exception {
 
+        var method = PgpCryptoService.class
+                .getDeclaredMethod("readPublicKey", String.class);
+
+        method.setAccessible(true);
+
+        Object result = method.invoke(pgpCryptoService, PUBLIC_KEY);
+
+        assertNotNull(result);
+        assertTrue(result instanceof PGPPublicKey);
+        assertTrue(((PGPPublicKey) result).isEncryptionKey());
+    }
+
+    /** readPublicKey() throws when provided key material contains no public key ring */
+    @Test
+    void readPublicKeyNoRingTest() throws Exception {
+
+        var method = PgpCryptoService.class
+                .getDeclaredMethod("readPublicKey", String.class);
+
+        method.setAccessible(true);
+
+        Exception ex = assertThrows(Exception.class,
+                () -> method.invoke(pgpCryptoService, PRIVATE_KEY));
+
+        Throwable cause = ex.getCause();
+
+        assertTrue(cause instanceof CryptoException.PgpException);
+        assertEquals("No encryption-capable public key found in provided key material",
+                cause.getMessage());
+    }
+
+    /** decrypt() throws when no matching private key is found for decryption */
+    @Test
+    void decryptNoMatchingPrivateKeyTest() {
+
+        byte[] data = "hello".getBytes();
+
+        String encrypted = pgpCryptoService.encrypt(data, PUBLIC_KEY);
+
+        String differentPrivateKey = OTHER_PRIVATE_KEY;
+
+        CryptoException.PgpException exception =
+                assertThrows(CryptoException.PgpException.class,
+                        () -> pgpCryptoService.decrypt(encrypted, differentPrivateKey));
+
+        assertEquals("No matching private key found for decryption", exception.getMessage());
+    }
 
 }

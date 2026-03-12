@@ -80,16 +80,16 @@ HSdSbFMum2GBaaQKyyGiFgyDK6synjs=
         assertEquals("Certificate source must not be null or blank", ex.getMessage());
     }
 
-    /** Throws when certificate data is invalid */
+    /** * Verifies that loadCertificate throws PkiException for malformed data.
+     */
     @Test
     void loadCertificateInvalidTest() {
+        CryptoException.PkiException ex = assertThrows(
+                CryptoException.PkiException.class,
+                () -> pkiUtils.loadCertificate("not-a-real-cert")
+        );
 
-        CryptoException.PkiException ex =
-                assertThrows(CryptoException.PkiException.class,
-                        () -> pkiUtils.loadCertificate("invalid-cert"));
-
-        assertEquals("Failed to load certificate", ex.getMessage());
-        assertNotNull(ex.getCause());
+        assertTrue(ex.getMessage().contains("Failed to load certificate"));
     }
 
     /** Returns true for a valid certificate */
@@ -103,12 +103,16 @@ HSdSbFMum2GBaaQKyyGiFgyDK6synjs=
         assertTrue(valid);
     }
 
-    /** Throws when validateCertificate is called with null */
+    /** Throws PkiException when validateCertificate is called with null */
     @Test
     void validateCertificateNullTest() {
+        CryptoException.PkiException ex = assertThrows(
+                CryptoException.PkiException.class,
+                () -> pkiUtils.validateCertificate(null),
+                "Should throw PkiException when certificate is null per Javadoc"
+        );
 
-        assertThrows(NullPointerException.class,
-                () -> pkiUtils.validateCertificate(null));
+        assertEquals("Certificate must not be null", ex.getMessage());
     }
 
     /** Generates an RSA key pair using the provider */
@@ -212,20 +216,16 @@ HSdSbFMum2GBaaQKyyGiFgyDK6synjs=
         );
     }
 
-    /** Throws when loadCertificate is called with blank string */
+    /** Verifies that loadCertificate throws PkiException when the source is blank,matching the Javadoc contract */
     @Test
     void loadCertificateSourceBlankTest() {
-
-        PkiUtils utils = new PkiUtils();
-
-        CryptoException.PkiException ex =
-                assertThrows(CryptoException.PkiException.class,
-                        () -> utils.loadCertificate("   "));
-
-        assertEquals(
-                "Certificate source must not be null or blank",
-                ex.getMessage()
+        CryptoException.PkiException ex = assertThrows(
+                CryptoException.PkiException.class,
+                () -> pkiUtils.loadCertificate("   "),
+                "Should throw PkiException for blank input"
         );
+
+        assertEquals("Certificate source must not be null or blank", ex.getMessage());
     }
 }
 

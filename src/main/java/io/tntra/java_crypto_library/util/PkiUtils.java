@@ -119,9 +119,10 @@ public final class PkiUtils {
      * @throws CryptoException.PkiException if {@code certificate} is {@code null}
      */
     public boolean validateCertificate(X509Certificate certificate) {
-        Objects.requireNonNull(certificate, "Certificate must not be null");
+        if (certificate == null) {
+            throw new CryptoException.PkiException("Certificate must not be null");
+        }
         try {
-            // Used Instant, instead of legacy Date
             certificate.checkValidity(java.util.Date.from(Instant.now()));
             log.debug("Certificate is valid: subject={}", certificate.getSubjectX500Principal());
             return true;

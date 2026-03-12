@@ -1,4 +1,4 @@
-package io.tntra.java_crypto_library.service;
+package io.tntra.java_crypto_library.helper;
 
 import io.tntra.java_crypto_library.exception.CryptoException;
 import io.tntra.java_crypto_library.properties.CryptoProperties;
@@ -45,7 +45,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  * </ul>
  */
 @Slf4j
-public final class PgpCryptoService {
+public final class PgpCryptoHelper {
 
 
     private static final int BUFFER_SIZE = 1 << 16;
@@ -63,7 +63,7 @@ public final class PgpCryptoService {
      *
      * @param properties Spring-bound crypto configuration; must not be {@code null}
      */
-    public PgpCryptoService(CryptoProperties properties) {
+    public PgpCryptoHelper(CryptoProperties properties) {
         this.properties = Objects.requireNonNull(properties, "CryptoProperties must not be null");
     }
 

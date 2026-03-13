@@ -1,17 +1,20 @@
 package io.tntra.java_crypto_library.helper;
 
+
 import io.tntra.java_crypto_library.exception.CryptoException;
-import io.tntra.java_crypto_library.properties.CryptoProperties;
+import io.tntra.java_crypto_library.helper.PgpCryptoHelper;
 import org.bouncycastle.openpgp.PGPObjectFactory;
 import org.bouncycastle.openpgp.PGPPublicKey;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
-@DisplayName("PgpCryptoHelper")
+@DisplayName("PGP Crypto")
 class PgpCryptoHelperTest {
 
     private PgpCryptoHelper pgpCryptoHelper;
@@ -174,12 +177,12 @@ class PgpCryptoHelperTest {
 
     @BeforeEach
     void setup() {
+        io.tntra.java_crypto_library.properties.CryptoProperties.Pgp pgp =
+                new io.tntra.java_crypto_library.properties.CryptoProperties.Pgp("");
 
-        CryptoProperties.Pgp pgp =
-                new CryptoProperties.Pgp(PUBLIC_KEY, PRIVATE_KEY, "");
+        io.tntra.java_crypto_library.properties.CryptoProperties props =
+                new io.tntra.java_crypto_library.properties.CryptoProperties(AES_KEY, pgp);
 
-        CryptoProperties props =
-                new CryptoProperties(AES_KEY, pgp);
 
         pgpCryptoHelper = new PgpCryptoHelper(props);
     }
@@ -371,9 +374,9 @@ class PgpCryptoHelperTest {
     @Test
     void extractLiteralDataUnexpectedTypeTest() throws Exception {
 
-        CryptoProperties props =
-                new CryptoProperties("dvjKbD/FWcZ775VbcD0STWCdfMO9rE9jyPvkr+ySGAY=",
-                        CryptoProperties.Pgp.EMPTY);
+        io.tntra.java_crypto_library.properties.CryptoProperties props =
+                new io.tntra.java_crypto_library.properties.CryptoProperties("dvjKbD/FWcZ775VbcD0STWCdfMO9rE9jyPvkr+ySGAY=",
+                        io.tntra.java_crypto_library.properties.CryptoProperties.Pgp.EMPTY);
 
         PgpCryptoHelper service = new PgpCryptoHelper(props);
 
@@ -398,8 +401,8 @@ class PgpCryptoHelperTest {
     @Test
     void resolveEncryptedDataListNoEncryptedDataTest() throws Exception {
 
-        CryptoProperties props =
-                new CryptoProperties(AES_KEY, CryptoProperties.Pgp.EMPTY);
+        io.tntra.java_crypto_library.properties.CryptoProperties props =
+                new io.tntra.java_crypto_library.properties.CryptoProperties(AES_KEY, io.tntra.java_crypto_library.properties.CryptoProperties.Pgp.EMPTY);
 
         PgpCryptoHelper service = new PgpCryptoHelper(props);
 

@@ -1,5 +1,4 @@
 package io.tntra.java_crypto_library.properties;
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
@@ -17,8 +16,6 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
  * crypto:
  *   aes-key: ${CRYPTO_AES_KEY}
  *   pgp:
- *     public-key:            ${CRYPTO_PGP_PUBLIC_KEY}
- *     private-key:           ${CRYPTO_PGP_PRIVATE_KEY}
  *     private-key-passphrase: ${CRYPTO_PGP_PASSPHRASE}
  * }</pre>
  *
@@ -34,17 +31,13 @@ public record CryptoProperties(
     /**
      * Immutable PGP key configuration.
      *
-     * @param publicKey            ASCII-armored PGP public key (encrypt / verify)
-     * @param privateKey           ASCII-armored PGP private key (decrypt / sign)
      * @param privateKeyPassphrase Passphrase protecting the private key
      */
     public record Pgp(
-            String publicKey,
-            String privateKey,
             String privateKeyPassphrase
     ) {
         /** Canonical empty-passphrase sentinel. */
-        public static final Pgp EMPTY = new Pgp(null, null, null);
+        public static final Pgp EMPTY = new Pgp(null);
 
         /**
          * Returns the passphrase as a {@code char[]}, never {@code null}.

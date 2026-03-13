@@ -1,5 +1,6 @@
 package io.tntra.java_crypto_library.helper;
 
+
 import io.tntra.java_crypto_library.exception.CryptoException;
 import io.tntra.java_crypto_library.properties.CryptoProperties;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +23,7 @@ import java.util.Objects;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
- * Service providing PGP encryption, decryption, digital signing, and
+ * Helper providing PGP encryption, decryption, digital signing, and
  * signature verification.
  *
  * <p>Uses Bouncy Castle as the JCE provider. All keys are loaded from
@@ -59,7 +60,7 @@ public final class PgpCryptoHelper {
     }
 
     /**
-     * Constructs the service with the supplied configuration.
+     * Constructs the helper with the supplied configuration.
      *
      * @param properties Spring-bound crypto configuration; must not be {@code null}
      */
